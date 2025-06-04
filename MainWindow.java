@@ -5,6 +5,8 @@ public class MainWindow extends JFrame {
         super("Main Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
-        // Add components here
+        
+        ChemieSaal chemieSaal = new ChemieSaal();
+        add(chemieSaal);
     }
 }
