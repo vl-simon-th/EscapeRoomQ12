@@ -4,5 +4,6 @@ import java.awt.Color;
 public class ChemieSaal extends JPanel {
     public ChemieSaal() {
         setBackground(Color.YELLOW);
+        setPreferredSize(new java.awt.Dimension(400, 300));
     }
 }
