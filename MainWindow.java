@@ -6,7 +6,7 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
         
-        ChemieSaal chemieSaal = new ChemieSaal();
-        add(chemieSaal);
+        Map map = new Map();
+        setContentPane(map);
     }
 }
