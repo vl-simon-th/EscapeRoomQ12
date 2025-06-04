@@ -36,21 +36,11 @@ public class Map extends javax.swing.JPanel {
             public void keyPressed(KeyEvent e) {
                 int key = e.getKeyCode();
                 switch (key) {
-                    case KeyEvent.VK_LEFT:
-                        playerX = Math.max(0, playerX - 5);
-                        break;
-                    case KeyEvent.VK_RIGHT:
-                        playerX = Math.min(getWidth() - PLAYER_SIZE, playerX + 5);
-                        break;
-                    case KeyEvent.VK_UP:
-                        playerY = Math.max(0, playerY - 5);
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        playerY = Math.min(getHeight() - PLAYER_SIZE, playerY + 5);
-                        break;
-                    case KeyEvent.VK_SPACE:
-                        currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.size();
-                        break;
+                    case KeyEvent.VK_LEFT -> playerX = Math.max(0, playerX - 5);
+                    case KeyEvent.VK_RIGHT -> playerX = Math.min(getWidth() - PLAYER_SIZE, playerX + 5);
+                    case KeyEvent.VK_UP -> playerY = Math.max(0, playerY - 5);
+                    case KeyEvent.VK_DOWN -> playerY = Math.min(getHeight() - PLAYER_SIZE, playerY + 5);
+                    case KeyEvent.VK_SPACE -> currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.size();
                 }
                 repaint();
             }
