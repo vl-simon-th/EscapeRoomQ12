@@ -1,13 +1,26 @@
-import java.awt.Color;
-import javax.swing.JPanel;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.*;
+import javax.swing.*;
+
 public class PhysikSaal extends JPanel {
+
+    private Image background;
+
     public PhysikSaal() {
-        Image backround = Toolkit.getDefaultToolkit().createImage();
-        this.drawImage((background, 0, 0 null));
+       
+        this.background = new ImageIcon("img/test.png").getImage();
+
+        
         setBackground(Color.YELLOW);
-        setMaximumSize(new java.awt.Dimension(100, 100)); // Replace 800, 600 with your desired width and height
+
+        // Optional: maximale Größe festlegen
+        setPreferredSize(new Dimension(800, 600)); 
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+       
+        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
     }
 }
