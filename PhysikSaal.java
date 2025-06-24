@@ -10,10 +10,13 @@ public class PhysikSaal extends JPanel {
         this.background = new ImageIcon("img/test.png").getImage();
 
         
-        setBackground(Color.YELLOW);
+      
 
         // Optional: maximale Größe festlegen
         setPreferredSize(new Dimension(800, 600)); 
+        if (background == null) {
+    System.err.println("Bild konnte nicht geladen werden!");
+}
     }
 
     @Override
