@@ -6,24 +6,25 @@ public class PhysikSaal extends JPanel {
     private Image background;
 
     public PhysikSaal() {
-       
-        this.background = new ImageIcon("img/test.png").getImage();
+        // Versuche, Bild aus dem Ressourcenpfad zu laden
+        try {
+            background = new ImageIcon(getClass().getResource("/img/test.png")).getImage();
+        } catch (Exception e) {
+            System.err.println("Bild konnte nicht geladen werden: " + e.getMessage());
+        }
 
-        
-      
-
-        // Optional: maximale Größe festlegen
-        setPreferredSize(new Dimension(800, 600)); 
-        if (background == null) {
-    System.err.println("Bild konnte nicht geladen werden!");
-}
+        setPreferredSize(new Dimension(800, 600));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-       
-        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+        if (background != null) {
+            g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+        } else {
+            g.setColor(Color.RED);
+            g.drawString("Hintergrundbild fehlt!", 10, 20);
+        }
     }
 }
