@@ -8,30 +8,36 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+//VERY IMPORTANT
+// Maps need to match 5000x3500 pixels
+
 public class Map extends javax.swing.JPanel {
     private static final long serialVersionUID = 1L;
 
     private final List<Image> maps;
     private int currentMapIndex = 0;
-    private int playerX = 50, playerY = 50;
-    private final int PLAYER_SIZE = 20;
+    private int playerX = 500, playerY = 500;
+    private final int PLAYER_SIZE = 75;
 
-    private int mapTotalWidth = 1000; // Replace with your desired width
-    private int mapTotalHeight = 750; // Replace with your desired height
+    private int mapTotalWidth = 5000; // Replace with your desired width
+    private int mapTotalHeight = 3500; // Replace with your desired height
 
     // Viewport (camera) position and zoom
     private int viewportX = 0;
     private int viewportY = 0;
     private double zoom = 1.0;
 
+    double zoomMax = 2.5;
+    double zoomMin = 0.3;
+
     public Map() {
         super();
         setLayout(null);
-        setBackground(Color.RED);
+        setBackground(Color.GRAY);
 
         // Load images (replace with your actual image paths)
         maps = new ArrayList<>();
-        maps.add(Toolkit.getDefaultToolkit().createImage("./img/test.jpg"));
+        maps.add(Toolkit.getDefaultToolkit().createImage("./mapImg/MapTest.png"));
 
         setFocusable(true);
         setPreferredSize(new Dimension(1000, 750)); // Match map size
@@ -44,7 +50,7 @@ public class Map extends javax.swing.JPanel {
         addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mousePressed(java.awt.event.MouseEvent e) {
-                if (e.getButton() == java.awt.event.MouseEvent.BUTTON3) { // Right mouse button
+                if (e.getButton() == java.awt.event.MouseEvent.BUTTON1) { // Right mouse button
                     dragging[0] = true;
                     lastMouseX[0] = e.getX();
                     lastMouseY[0] = e.getY();
@@ -86,7 +92,7 @@ public class Map extends javax.swing.JPanel {
                     case KeyEvent.VK_DOWN -> viewportY = Math.min(mapTotalHeight - (int)(getHeight() / zoom), viewportY + panStep);
                     // Zooming
                     case KeyEvent.VK_PLUS, KeyEvent.VK_EQUALS -> {
-                        if (zoom < 5.0) {
+                        if (zoom < zoomMax) {
                             zoom += 0.1;
                             // Clamp viewport to map bounds after zoom
                             viewportX = Math.min(viewportX, mapTotalWidth - (int)(getWidth() / zoom));
@@ -94,7 +100,7 @@ public class Map extends javax.swing.JPanel {
                         }
                     }
                     case KeyEvent.VK_MINUS -> {
-                        if (zoom > 0.5) {
+                        if (zoom > zoomMin) {
                             zoom -= 0.1;
                             // Clamp viewport to map bounds after zoom
                             viewportX = Math.min(viewportX, mapTotalWidth - (int)(getWidth() / zoom));
@@ -115,9 +121,9 @@ public class Map extends javax.swing.JPanel {
         addMouseWheelListener((java.awt.event.MouseWheelEvent e) -> {
             int notches = e.getWheelRotation();
             double oldZoom = zoom;
-            if (notches < 0 && zoom < 5.0) {
+            if (notches < 0 && zoom < zoomMax) {
                 zoom += 0.1;
-            } else if (notches > 0 && zoom > 0.5) {
+            } else if (notches > 0 && zoom > zoomMin) {
                 zoom -= 0.1;
             }
             // Keep the mouse position fixed relative to the map when zooming
@@ -145,6 +151,7 @@ public class Map extends javax.swing.JPanel {
             // Clamp viewport to map bounds
             viewportX = Math.max(0, Math.min(viewportX, mapTotalWidth - srcW));
             viewportY = Math.max(0, Math.min(viewportY, mapTotalHeight - srcH));
+            
             g.drawImage(
                 maps.get(currentMapIndex),
                 0, 0, getWidth(), getHeight(), // Destination rectangle (panel)
@@ -158,5 +165,13 @@ public class Map extends javax.swing.JPanel {
         int playerScreenSize = (int)(PLAYER_SIZE * zoom);
         g.setColor(Color.BLUE);
         g.fillOval(playerScreenX, playerScreenY, playerScreenSize, playerScreenSize);
+    }
+
+    private int edgeWidth() {
+        return Math.min((int)(0.3 * getWidth()), 50);
+    }
+
+    private int edgeHeight() {
+        return Math.min((int)(0.3 * getHeight()), 50);
     }
 }
