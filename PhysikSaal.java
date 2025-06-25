@@ -6,13 +6,7 @@ public class PhysikSaal extends JPanel {
     private Image background;
 
     public PhysikSaal() {
-        // Versuche, Bild aus dem Ressourcenpfad zu laden
-        try {
-            background = new ImageIcon(getClass().getResource("/img/test.png")).getImage();
-        } catch (Exception e) {
-            System.err.println("Bild konnte nicht geladen werden: " + e.getMessage());
-        }
-
+        background = new ImageIcon("img/test.jpg").getImage();
         setPreferredSize(new Dimension(800, 600));
     }
 
