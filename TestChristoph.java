@@ -3,10 +3,10 @@ import javax.swing.*;
 public class TestChristoph {
     public static void main(String[] args) {
         // Fenster erzeugen
-        JFrame frame = new JFrame("PhysikSaal Test");
+        JFrame frame = new JFrame("RätselPhysik Test");
 
         // Panel hinzufügen
-        frame.add(new PhysikSaal());
+        frame.setContentPane(new RätselPhysik(frame));
 
         // Größe automatisch anpassen (nimmt preferredSize vom Panel)
         frame.pack();
