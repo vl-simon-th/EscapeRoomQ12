@@ -17,10 +17,10 @@ public class Map extends javax.swing.JPanel {
     private final List<Image> maps;
     private int currentMapIndex = 0;
     private int playerX = 500, playerY = 500;
-    private final int PLAYER_SIZE = 75;
+    private final int PLAYER_SIZE = 50;
 
-    private int mapTotalWidth = 5000; // Replace with your desired width
-    private int mapTotalHeight = 3500; // Replace with your desired height
+    private int mapTotalWidth = 3000; // Replace with your desired width
+    private int mapTotalHeight = 3000; // Replace with your desired height
 
     // Viewport (camera) position and zoom
     private int viewportX = 0;
@@ -37,7 +37,7 @@ public class Map extends javax.swing.JPanel {
 
         // Load images (replace with your actual image paths)
         maps = new ArrayList<>();
-        maps.add(Toolkit.getDefaultToolkit().createImage("./mapImg/MapTest.png"));
+        maps.add(Toolkit.getDefaultToolkit().createImage("./mapImg/Map.png"));
 
         setFocusable(true);
         setPreferredSize(new Dimension(1000, 750)); // Match map size
@@ -149,8 +149,14 @@ public class Map extends javax.swing.JPanel {
             int srcW = (int)(getWidth() / zoom);
             int srcH = (int)(getHeight() / zoom);
             // Clamp viewport to map bounds
-            viewportX = Math.max(0, Math.min(viewportX, mapTotalWidth - srcW));
-            viewportY = Math.max(0, Math.min(viewportY, mapTotalHeight - srcH));
+            
+            // Center map if smaller than visible space
+            int centerX = Math.max(0, (srcW - mapTotalWidth) / 2);
+            int centerY = Math.max(0, (srcH - mapTotalHeight) / 2);
+
+            // Clamp viewport to map bounds
+            viewportX = Math.max(-centerX, Math.min(viewportX, mapTotalWidth - srcW));
+            viewportY = Math.max(-centerY, Math.min(viewportY, mapTotalHeight - srcH));
             
             g.drawImage(
                 maps.get(currentMapIndex),
@@ -165,13 +171,5 @@ public class Map extends javax.swing.JPanel {
         int playerScreenSize = (int)(PLAYER_SIZE * zoom);
         g.setColor(Color.BLUE);
         g.fillOval(playerScreenX, playerScreenY, playerScreenSize, playerScreenSize);
-    }
-
-    private int edgeWidth() {
-        return Math.min((int)(0.3 * getWidth()), 50);
-    }
-
-    private int edgeHeight() {
-        return Math.min((int)(0.3 * getHeight()), 50);
     }
 }
